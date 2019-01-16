@@ -1,0 +1,24 @@
+﻿@model ThAmCo.Events.Models.GuestBookingIndexViewModel
+
+@{
+    ViewData["Title"] = "All Guests";
+}
+
+<h2>All Guests</h2>
+
+<p>
+    <a asp-action="Create" asp-route-id="@Model.EventId">Add Guest</a>
+</p>
+<p>@Html.DisplayNameFor(model => model.TotalGuests) @Html.DisplayFor(model => Model.TotalGuests)</p>
+@if (Model.AllGuests.Count() == 0)
+{
+    <p>No guests to show.</p>
+}
+else
+{
+    <partial name="_GuestsForEvent" for="AllGuests" />
+}
+
+<div>
+    <a asp-controller="Events" asp-action="Index">Back to Events List</a>
+</div>

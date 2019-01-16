@@ -1,0 +1,41 @@
+﻿@model ThAmCo.Events.Models.StaffBookingIndexViewModel
+
+@{
+    ViewData["Title"] = "All Staff";
+}
+
+<h2>@Html.DisplayNameFor(model => model.StaffMembers)</h2>
+
+<p>
+    <a asp-action="Create" asp-route-id="@Model.EventId">Add Staff</a>
+</p>
+<p>@Html.DisplayNameFor(model => model.TotalStaff) @Html.DisplayFor(model => Model.TotalStaff)</p>
+<p>@Html.DisplayNameFor(model => model.HasEnoughStaff) @Html.DisplayFor(model => Model.HasEnoughStaff)</p>
+<p>@Html.DisplayNameFor(model => model.HasFirstAider) @Html.DisplayFor(model => Model.HasFirstAider)</p>
+
+@if (Model.HasEnoughStaff == "No")
+{
+    <div class="alert alert-danger" role="alert">
+        <b>Warning!</b> This event doesn't have at least 1 staff member per 10 guests!
+    </div>
+}
+
+@if (Model.HasFirstAider == "No")
+{
+    <div class="alert alert-danger" role="alert">
+        <b>Warning!</b> This event doesn't have at least 1 staff member that is a first aider!
+    </div>
+}
+
+@if (Model.StaffMembers.Count() == 0)
+{
+    <p>No staff to show.</p>
+}
+else
+{
+    <partial name="_StaffForEvent" for="StaffMembers" />
+}
+
+<div>
+    <a asp-controller="Events" asp-action="Index">Back to Events List</a>
+</div>

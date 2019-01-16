@@ -1,0 +1,42 @@
+﻿@model ThAmCo.Events.Models.FoodMenuDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Food Menu</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MenuName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MenuDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.People)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.People)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuCost)
+        </dt>
+        <dd>
+            £@Html.DisplayFor(model => model.MenuCost)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

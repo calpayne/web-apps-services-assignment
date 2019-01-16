@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ThAmCo.Events.Models.EventViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>All Events</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@if (Model.Count() == 0)
+{
+    <p>There are no events to show.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Venue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalGuests)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalStaff)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HasFirstAider)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HasEnoughStaff)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Venue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalGuests)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalStaff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HasFirstAider)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HasEnoughStaff)
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Manage
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-action="SetVenue" asp-route-id="@item.Id">Set Venue</a></li>
+                                <li><a asp-controller="FoodMenus" asp-action="BookFood" asp-route-id="@item.Id">Book Food</a></li>
+                                <li><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
+                                <li><a asp-action="Details" asp-route-id="@item.Id">Details</a></li>
+                                <li><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                                <li><a asp-controller="GuestBookings" asp-action="Index" asp-route-id="@item.Id">Manage Guests</a></li>
+                                <li><a asp-controller="StaffBookings" asp-action="Index" asp-route-id="@item.Id">Manage Staff</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

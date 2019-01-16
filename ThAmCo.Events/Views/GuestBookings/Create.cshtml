@@ -1,0 +1,48 @@
+﻿@model ThAmCo.Events.Data.GuestBooking
+
+@{
+    ViewData["Title"] = "Add a Guest";
+}
+
+<h2>Add a Guest</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EventId" class="form-control" value="@ViewBag.EventId" />
+            @if (ViewBag.CustomerCheck == null || ViewBag.CustomerCheck)
+            {
+                <div class="form-group">
+                    <p>All existing customers are already guests on the event.</p>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="Customer" class="control-label"></label>
+                    <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Attended" /> @Html.DisplayNameFor(model => model.Attended)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id="@ViewBag.EventId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

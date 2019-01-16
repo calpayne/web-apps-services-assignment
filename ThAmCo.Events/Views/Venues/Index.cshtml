@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Venues</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="control-label" for="Date">Event Date:</label>
+    </div>
+    <div class="col-md-3">
+        <input class="form-control" type="datetime-local" id="Date" name="Date" value="2018-10-28T00:00:00.000" />
+    </div>
+    <div class="col-md-2 text-right">
+        <label class="control-label" for="Type">Event Type:</label>
+    </div>
+    <div class="col-md-3">
+        <select class="form-control" id="Type" name="Type"></select>
+    </div>
+    <div class="col-md-2">
+        <button id="UpdateVenues" class="btn btn-default">Show Venues</button>
+    </div>
+</div>
+
+<hr />
+<table class="table" id="venues">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Venue</th>
+            <th>Description</th>
+            <th>Capacity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Enter data and then click show venues to show the venues.</td>
+            <td style="display:none"></td>
+            <td style="display:none"></td>
+            <td style="display:none"></td>
+            <td style="display:none"></td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:23652/api/eventtypes",
+                method: "GET",
+                crossDomain: true,
+                success: function (result) {
+                    var types = '';
+                    for (var i = 0; i < result.length; i++) {
+                        types += '<option value="' + result[i].id + '">' + result[i].title + '</option>';
+                    }
+                    $('#Type').html(types);
+                },
+                error: function () {
+                    alert("Error connecting to Venues API");
+                }
+            });
+
+            $("#UpdateVenues").click(function () {
+                var apiURL = "http://localhost:23652/api/availability?eventtype=" + $('#Type').val() + "&beginDate=" + $('#Date').val() + "&endDate=" + $('#Date').val();
+
+                $.ajax({
+                    url: apiURL,
+                    method: "GET",
+                    crossDomain: true,
+                    success: function (result) {
+                        var venues = '';
+                        for (var i = 0; i < result.length; i++) {
+                            venues += '<tr><td>' + result[i].code + '</td><td>' + result[i].name + '<td>' + result[i].description + '<td>' + result[i].capacity + '</td><td><a href="/Events/Create/?code=' + result[i].code + '&type=' + $('#Type').val() + '&date=' + $('#Date').val() + '" class="btn btn-default">Create Event with Venue</a></td></tr>';
+                        }
+
+                        if (!venues.trim()) {
+                            venues = '<tr><td colspan="5">No Venues could be found meeting your criteria.</td><td style="display:none"></td><td style="display:none"></td><td style="display:none"></td><td style="display:none"></td></tr>';
+                        }
+
+                        $('#venues tbody').html(venues);
+                    },
+                    error: function () {
+                        alert("Error connecting to Venues API");
+                    }
+                });
+            });
+        });
+    </script>
+}

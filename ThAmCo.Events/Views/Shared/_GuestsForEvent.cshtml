@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ThAmCo.Events.Models.GuestBookingViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attended)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Title)
+                </td>
+                <td>
+                    @if (item.Attended)
+                    {
+                        <input onclick="updateAttendance(@item.CustomerId, @item.EventId)" checked="checked" class="check-box" type="checkbox" title="Click to update their attendance">
+                    }
+                    else
+                    {
+                        <input onclick="updateAttendance(@item.CustomerId, @item.EventId)" class="check-box" type="checkbox" title="Click to update their attendance">
+                    }
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Manage
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Customers" asp-action="Details" asp-route-id="@item.CustomerId">Details</a></li>
+                            <li><a asp-controller="GuestBookings" asp-action="Delete" asp-route-customerid="@item.CustomerId" asp-route-eventid="@item.EventId">Remove Guest</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

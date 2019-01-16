@@ -1,0 +1,47 @@
+﻿@model ThAmCo.Events.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Set Venue";
+}
+
+<h2>Set Venue</h2>
+
+<h4>Event: @Html.DisplayFor(model => model.Title)</h4>
+<p>Any current Venue reservation will be replaced.</p>
+<hr />
+@if (ViewBag.NumVenues == 0)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <p>There are no venues available that meet this events requirements.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="SetVenue">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Date" />
+                    <label asp-for="Venue" class="control-label"></label>
+                    <select asp-for="Venue" class="form-control" asp-items="ViewBag.Venue"></select>
+                    <span asp-validation-for="Venue" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Set Venue" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

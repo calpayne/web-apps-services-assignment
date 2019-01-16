@@ -1,0 +1,229 @@
+﻿@model ThAmCo.Events.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Event</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HasEnoughStaff)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HasEnoughStaff)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HasFirstAider)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HasFirstAider)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Duration)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Duration)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalGuests)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalGuests)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalStaff)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalStaff)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <h4>Venue</h4>
+        <hr />
+@if (Model.Venue != null && Model.VenueReference != null)
+{
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Venue)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Venue)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueReference)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VenueReference)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueData.VenueName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VenueData.VenueName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueData.VenueCapacity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VenueData.VenueCapacity)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueData.VenueCostPerHour)
+            </dt>
+            <dd>
+                £@Html.DisplayFor(model => model.VenueData.VenueCostPerHour)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueData.WhenMade)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VenueData.WhenMade)
+            </dd>
+        </dl>
+}
+else
+{
+        <p>No venue has been set for this event. <a asp-action="SetVenue" asp-route-id="@Model.Id">Set a Venue</a>.</p>
+}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h4>Food</h4>
+        <hr />
+@if (Model.HasFoodBooked == "Yes")
+{
+        <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    People
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.FoodMenuData) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.People)
+                </td>
+                <td>
+                    £@Html.DisplayFor(modelItem => item.MenuCost)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Manage
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="FoodMenus" asp-action="Details" asp-route-id="@item.Id">Details</a></li>
+                            <li><a asp-controller="FoodMenus" asp-action="UnbookFood" asp-route-eventid="@Model.Id" asp-route-foodid="@item.Id">Remove Food</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+else
+{
+        <p>No food has been booked for this event. <a asp-controller="FoodMenus" asp-action="BookFood" asp-route-id="@Model.Id">Book Food</a>.</p>
+}
+    </div>
+    <div class="col-md-6">
+        <h4>Event Costs</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalFoodMenuCost)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalFoodMenuCost)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalVenueCost)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalVenueCost)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalEventCost)
+            </dt>
+            <dd>
+                £@Html.DisplayFor(model => model.TotalEventCost)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h4>@Html.DisplayNameFor(model => model.AllGuests)</h4>
+        <hr />
+@if(Model.AllGuests.Count == 0)
+{
+        <p>No guests can be found for the event. <a asp-controller="GuestBookings" asp-action="Create" asp-route-id="@Model.Id">Add a Guest</a>.</p>
+}
+else
+{
+        <partial name="_GuestsForEvent" for="AllGuests" />
+}
+    </div>
+    <div class="col-md-6">
+        <h4>@Html.DisplayNameFor(model => model.AllStaff)</h4>
+        <hr />
+@if (Model.AllStaff.Count == 0)
+{
+        <p>No staff can be found for the event. <a asp-controller="StaffBookings" asp-action="Create" asp-route-id="@Model.Id">Add a Staff Member</a>.</p>
+}
+else
+{
+        <partial name="_StaffForEvent" for="AllStaff" />
+}
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

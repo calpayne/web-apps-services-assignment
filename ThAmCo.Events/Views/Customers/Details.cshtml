@@ -1,0 +1,51 @@
+﻿@model ThAmCo.Events.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Customer Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Surname)
+            </dt>
+            <dd>
+                @Model.Surname
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd>
+                @Model.FirstName
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd>
+                @Model.Email
+            </dd>
+        </dl>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>@Html.DisplayNameFor(model => model.Bookings)</h4>
+        <hr />
+        @if (Model.Bookings.Count == 0)
+        {
+            <p>No events to show.</p>
+        }
+        else
+        {
+            <partial name="_AttendedEvents" for="Bookings" />
+        }
+    </div>
+
+</div>
