@@ -1,6 +1,6 @@
 # Web Apps & Services Assignment
 ## Summary
-This is a project that I completed for a Webs Apps & Services assessment. For the assessment, I was provided with a Venues web service project and tasked with creating the Ecents web application and Catering web service.
+This is a project that I completed for a Webs Apps & Services assessment. For the assessment, I was provided with a Venues web service project and tasked with creating the Events web application and Catering web service.
 ### ThAmCo.Events
 This is the main project of the three as this is the only MVC web application. This project is where everything is managed. You can create Events and reserve appropriate Venues and book Food Menus, create Customers/Staff and add them to Events, and more (all functionality is stated in the functionality section).
 ### ThAmCo.Venues
