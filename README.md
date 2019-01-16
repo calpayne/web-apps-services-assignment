@@ -1,4 +1,4 @@
-# Summary of Project
+# Web Apps & Services Assignment
 ## Summary
 This is a project that I completed for a Webs Apps & Services assessment. For the assessment, I was provided with a Venues web service project and tasked with creating the Ecents web application and Catering web service.
 ### ThAmCo.Events
